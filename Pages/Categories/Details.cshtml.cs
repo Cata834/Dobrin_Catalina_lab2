@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Dobrin_Catalina_lab2.Data;
 using Dobrin_Catalina_lab2.Models;
 
-namespace Dobrin_Catalina_lab2.Pages.Publishers
+namespace Dobrin_Catalina_lab2.Pages.Categories
 {
     public class DetailsModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace Dobrin_Catalina_lab2.Pages.Publishers
             _context = context;
         }
 
-        public Publisher Publisher { get; set; } = default!;
+        public Category Category { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,14 +28,14 @@ namespace Dobrin_Catalina_lab2.Pages.Publishers
                 return NotFound();
             }
 
-            var publisher = await _context.Publisher.FirstOrDefaultAsync(m => m.ID == id);
-            if (publisher == null)
+            var category = await _context.Category.FirstOrDefaultAsync(m => m.ID == id);
+            if (category == null)
             {
                 return NotFound();
             }
             else
             {
-                Publisher = publisher;
+                Category = category;
             }
             return Page();
         }

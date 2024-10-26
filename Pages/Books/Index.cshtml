@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "/"
 @model Dobrin_Catalina_lab2.Pages.Books.IndexModel
 
 @{
@@ -17,10 +17,10 @@
                 @Html.DisplayNameFor(model => model.Book[0].Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Book[0].Author.FirstName)
+                @Html.DisplayNameFor(model => model.Book[0].Author)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Book[0].Author.LastName)
+                @Html.DisplayNameFor(model => model.Book[0].Price)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Book[0].PublishingDate)
@@ -28,28 +28,44 @@
             <th>
                 @Html.DisplayNameFor(model => model.Book[0].Publisher.PublisherName)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].BookCategories)
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Book) {
-        <tr>
+        @foreach (var item in Model.BookD.Books) {
+        string selectedRow = "";
+        if (item.ID == Model.BookID)
+        {
+         selectedRow = "table-success";
+         }
+         <tr class="@selectedRow">
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Author.FirstName)
+                    <!-- Afișăm numele complet al autorului: prenume și nume -->
+                    @(item.Author != null ? item.Author.FirstName + " " + item.Author.LastName : "N/A")
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Author.LastName)
+                    <!-- Afișăm prețul formatat cu două zecimale -->
+                    @String.Format("{0:0.00}", item.Price)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
+                
                 <td>
                     @Html.DisplayFor(modelItem => item.PublishingDate)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Publisher.PublisherName)
+                </td>
+                <td>
+                    @{
+                        foreach (var category in item.BookCategories)
+                        {
+                            @category.Category.ID @: @category.Category.CategoryName <br />
+                        }
+                    }
                 </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |

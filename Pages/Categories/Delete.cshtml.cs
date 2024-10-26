@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Dobrin_Catalina_lab2.Data;
 using Dobrin_Catalina_lab2.Models;
 
-namespace Dobrin_Catalina_lab2.Pages.Publishers
+namespace Dobrin_Catalina_lab2.Pages.Categories
 {
     public class DeleteModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace Dobrin_Catalina_lab2.Pages.Publishers
         }
 
         [BindProperty]
-        public Publisher Publisher { get; set; } = default!;
+        public Category Category { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,15 +29,15 @@ namespace Dobrin_Catalina_lab2.Pages.Publishers
                 return NotFound();
             }
 
-            var publisher = await _context.Publisher.FirstOrDefaultAsync(m => m.ID == id);
+            var category = await _context.Category.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (publisher == null)
+            if (category == null)
             {
                 return NotFound();
             }
             else
             {
-                Publisher = publisher;
+                Category = category;
             }
             return Page();
         }
@@ -49,11 +49,11 @@ namespace Dobrin_Catalina_lab2.Pages.Publishers
                 return NotFound();
             }
 
-            var publisher = await _context.Publisher.FindAsync(id);
-            if (publisher != null)
+            var category = await _context.Category.FindAsync(id);
+            if (category != null)
             {
-                Publisher = publisher;
-                _context.Publisher.Remove(Publisher);
+                Category = category;
+                _context.Category.Remove(Category);
                 await _context.SaveChangesAsync();
             }
 

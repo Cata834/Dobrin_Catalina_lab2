@@ -7,9 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Dobrin_Catalina_lab2.Data;
 using Dobrin_Catalina_lab2.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Dobrin_Catalina_lab2.Pages.Publishers
+namespace Dobrin_Catalina_lab2.Pages.Categories
 {
     public class IndexModel : PageModel
     {
@@ -19,11 +18,12 @@ namespace Dobrin_Catalina_lab2.Pages.Publishers
         {
             _context = context;
         }
-        public IList<Publisher> Publisher { get;set; } = default!;
-        
+
+        public IList<Category> Category { get;set; } = default!;
+
         public async Task OnGetAsync()
         {
-            Publisher = await _context.Publisher.ToListAsync();
+            Category = await _context.Category.ToListAsync();
         }
     }
 }
