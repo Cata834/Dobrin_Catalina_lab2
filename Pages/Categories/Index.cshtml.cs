@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Dobrin_Catalina_lab2.Data;
 using Dobrin_Catalina_lab2.Models;
+using Dobrin_Catalina_lab2.Models.ViewModels;
 
 namespace Dobrin_Catalina_lab2.Pages.Categories
 {
@@ -21,9 +22,36 @@ namespace Dobrin_Catalina_lab2.Pages.Categories
 
         public IList<Category> Category { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public IList<Book> Books { get; set; } = new List<Book>();
+
+        public CategoryIndexData CategoryData { get; set; } 
+        public int CategoryID { get; set; }
+
+        public async Task OnGetAsync(int? id)
         {
+            CategoryData = new CategoryIndexData();
             Category = await _context.Category.ToListAsync();
+            CategoryData.Categories = await _context.Category
+            .Include(c => c.BookCategories)
+                .ThenInclude(bc => bc.Book)
+                .ThenInclude(b => b.Author)
+            .OrderBy(c => c.CategoryName)
+            .ToListAsync();
+
+            if (id != null)
+            {
+                CategoryID = id.Value;
+                var category = CategoryData.Categories
+                    .Where(c => c.ID == id.Value)
+                    .SingleOrDefault(); // Folosim SingleOrDefault pentru a evita excepțiile
+
+                if (category != null)
+                {
+                    CategoryData.Books = category.BookCategories.Select(bc => bc.Book);
+                }
+            }
+
+
         }
     }
 }

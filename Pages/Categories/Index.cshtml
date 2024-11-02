@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id:int?}"
 @model Dobrin_Catalina_lab2.Pages.Categories.IndexModel
 
 @{
@@ -21,9 +21,12 @@
     </thead>
     <tbody>
 @foreach (var item in Model.Category) {
+            
         <tr>
             <td>
+                <a asp-page="./Index" asp-route-id="@item.ID">
                 @Html.DisplayFor(modelItem => item.CategoryName)
+                    </a>
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
@@ -34,3 +37,25 @@
 }
     </tbody>
 </table>
+
+@if (Model.Books != null && Model.Books.Any())
+{
+    <h3>Books in Selected Category</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model.Books)
+            {
+                <tr>
+                    <td>@book.Title</td>
+                    <td>@book.Author.FullName</td> <!-- Asigură-te că ai o proprietate FullName în clasa Author -->
+                </tr>
+            }
+        </tbody>
+    </table>
+}
