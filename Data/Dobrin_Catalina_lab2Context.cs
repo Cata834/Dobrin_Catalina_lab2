@@ -19,6 +19,8 @@ namespace Dobrin_Catalina_lab2.Data
         public DbSet<Dobrin_Catalina_lab2.Models.Category> Category { get; set; } = default!;
         public DbSet<Dobrin_Catalina_lab2.Models.Authors> Authors { get; set; } = default!; // modificare
        public IEnumerable<object> Author { get; internal set; } // modificare
+        public DbSet<Dobrin_Catalina_lab2.Models.Member> Member { get; set; } = default!;
+        public DbSet<Dobrin_Catalina_lab2.Models.Borrowing> Borrowing { get; set; } = default!;
 
     }
 }
