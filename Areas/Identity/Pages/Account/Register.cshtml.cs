@@ -88,8 +88,8 @@ namespace Dobrin_Catalina_lab2.Areas.Identity.Pages.Account
 
             await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
             await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-
             var result = await _userManager.CreateAsync(user, Input.Password);
+
             Member.Email = Input.Email;
             _context.Member.Add(Member);
             await _context.SaveChangesAsync();
@@ -98,6 +98,7 @@ namespace Dobrin_Catalina_lab2.Areas.Identity.Pages.Account
             {
                 _logger.LogInformation("User created a new account with password.");
 
+                var role = await _userManager.AddToRoleAsync(user, "User");
                 var userId = await _userManager.GetUserIdAsync(user);
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

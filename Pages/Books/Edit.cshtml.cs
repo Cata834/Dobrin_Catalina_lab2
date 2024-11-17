@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Dobrin_Catalina_lab2.Data;
 using Dobrin_Catalina_lab2.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Dobrin_Catalina_lab2.Pages.Books
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : BookCategoriesPageModel
        { 
         private readonly Dobrin_Catalina_lab2.Data.Dobrin_Catalina_lab2Context _context;
